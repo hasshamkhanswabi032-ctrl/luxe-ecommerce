@@ -1,0 +1,50 @@
+.home { background: var(--cream); min-height: 100vh; }
+.home-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 24px 60px; background: rgba(245,240,232,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+.home-nav-logo { font-family: var(--font-display); font-size: 22px; font-weight: 500; letter-spacing: 0.2em; }
+.home-nav-links { display: flex; gap: 12px; align-items: center; }
+.hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 60px 80px; gap: 80px; max-width: 1300px; margin: 0 auto; }
+.hero-text { flex: 1; }
+.hero-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone); margin-bottom: 20px; }
+.hero-title { font-family: var(--font-display); font-size: clamp(52px, 7vw, 88px); font-weight: 300; line-height: 1.08; margin-bottom: 24px; }
+.hero-title em { font-style: italic; color: var(--gold); }
+.hero-sub { font-size: 15px; color: var(--stone); line-height: 1.8; margin-bottom: 40px; font-weight: 300; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-visual { flex: 1; display: flex; justify-content: center; }
+.hero-card { width: 100%; max-width: 440px; aspect-ratio: 3/4; background: var(--charcoal); border-radius: 4px; overflow: hidden; position: relative; }
+.hero-card-img { position: absolute; inset: 0; }
+.abstract-shape { position: absolute; border-radius: 50%; }
+.shape-1 { width: 280px; height: 280px; background: var(--gold); opacity: 0.3; top: -40px; left: -40px; }
+.shape-2 { width: 200px; height: 200px; background: #8C8578; opacity: 0.4; bottom: 40px; right: -20px; }
+.shape-3 { width: 120px; height: 120px; background: var(--cream); opacity: 0.15; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.brand-section { background: var(--charcoal); padding: 60px; }
+.brand-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 40px; }
+.brand-stat { text-align: center; }
+.stat-number { display: block; font-family: var(--font-display); font-size: 52px; font-weight: 300; color: var(--gold); }
+.stat-label { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--stone-light); margin-top: 6px; display: block; }
+.about-section { padding: 100px 60px; }
+.about-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.section-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone); margin-bottom: 16px; }
+.about-heading { font-family: var(--font-display); font-size: 48px; font-weight: 300; margin-bottom: 24px; }
+.about-body { color: var(--stone); line-height: 1.8; margin-bottom: 16px; font-weight: 300; }
+.about-decorative { position: relative; height: 400px; }
+.deco-block { position: absolute; border-radius: 2px; }
+.deco-1 { width: 200px; height: 280px; background: var(--charcoal); top: 0; left: 0; }
+.deco-2 { width: 160px; height: 200px; background: var(--gold); opacity: 0.6; top: 60px; left: 140px; }
+.deco-3 { width: 120px; height: 120px; background: var(--cream-dark); border: 2px solid var(--border); bottom: 0; right: 0; }
+.features-section { background: var(--cream-dark); padding: 80px 60px; }
+.features-grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 48px; }
+.feature-item { text-align: center; }
+.feature-icon { font-size: 24px; color: var(--gold); margin-bottom: 16px; display: block; }
+.feature-item h3 { font-family: var(--font-display); font-size: 20px; font-weight: 400; margin-bottom: 10px; }
+.feature-item p { font-size: 14px; color: var(--stone); line-height: 1.7; font-weight: 300; }
+.home-footer { background: var(--charcoal); padding: 40px 60px; display: flex; align-items: center; justify-content: space-between; }
+.footer-logo { font-family: var(--font-display); font-size: 20px; letter-spacing: 0.2em; color: var(--cream); }
+.footer-text { font-size: 12px; color: var(--stone-light); letter-spacing: 0.05em; }
+@media (max-width: 768px) {
+  .home-nav { padding: 20px 24px; }
+  .hero { flex-direction: column; padding: 100px 24px 60px; }
+  .hero-visual { display: none; }
+  .brand-grid, .features-grid { grid-template-columns: 1fr; }
+  .about-inner { grid-template-columns: 1fr; }
+  .about-decorative { display: none; }
+}

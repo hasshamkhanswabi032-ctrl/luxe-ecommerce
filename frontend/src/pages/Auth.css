@@ -1,0 +1,26 @@
+.auth-page { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
+.auth-left { background: var(--charcoal); padding: 48px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+.auth-brand { font-family: var(--font-display); font-size: 22px; letter-spacing: 0.2em; color: var(--cream); font-weight: 500; }
+.auth-left-content { z-index: 1; position: relative; }
+.auth-left-title { font-family: var(--font-display); font-size: 52px; font-weight: 300; color: var(--cream); line-height: 1.1; }
+.auth-left-title em { color: var(--gold); font-style: italic; }
+.auth-left-sub { font-size: 14px; color: var(--stone-light); margin-top: 16px; font-weight: 300; }
+.auth-left-deco { position: absolute; bottom: 0; right: 0; z-index: 0; }
+.deco-circle { position: absolute; border-radius: 50%; }
+.deco-c1 { width: 300px; height: 300px; border: 1px solid rgba(201,168,76,0.2); bottom: -100px; right: -100px; }
+.deco-c2 { width: 180px; height: 180px; background: var(--gold); opacity: 0.1; bottom: -40px; right: -40px; }
+.auth-right { background: var(--cream); display: flex; align-items: center; justify-content: center; padding: 48px; }
+.auth-form-wrap { width: 100%; max-width: 400px; }
+.auth-title { font-family: var(--font-display); font-size: 40px; font-weight: 300; margin-bottom: 8px; }
+.auth-subtitle { font-size: 14px; color: var(--stone); margin-bottom: 36px; }
+.auth-link { color: var(--charcoal); font-weight: 500; text-decoration: underline; text-underline-offset: 2px; }
+.auth-form { display: flex; flex-direction: column; gap: 20px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone); font-weight: 500; }
+.auth-submit { width: 100%; margin-top: 8px; }
+.google-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 13px; font-size: 14px; font-weight: 400; color: var(--charcoal); cursor: pointer; transition: var(--transition); }
+.google-btn:hover { background: var(--cream-dark); }
+@media (max-width: 768px) {
+  .auth-page { grid-template-columns: 1fr; }
+  .auth-left { display: none; }
+}
