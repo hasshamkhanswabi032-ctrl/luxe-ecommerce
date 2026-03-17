@@ -6,7 +6,16 @@ require('dotenv').config();
 
 const app = express();
 
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:4000', credentials: true }));
+const corsOptions = {
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:4000',
+    'https://luxe-frontend-sepia.vercel.app',
+    process.env.CLIENT_URL
+  ].filter(Boolean),
+  credentials: true
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
