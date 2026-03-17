@@ -12,7 +12,9 @@ const { protect, adminOnly } = require('../middleware/auth');
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const dir = path.join(__dirname, '../uploads');
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    if (process.env.NODE_ENV !== 'production') {
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    }
     cb(null, dir);
   },
   filename: (req, file, cb) => {
