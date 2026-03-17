@@ -33,7 +33,7 @@ router.get('/', protect, async (req, res) => {
 router.post('/', protect, adminOnly, upload.single('image'), async (req, res) => {
   try {
     const { title, description, price, category, stock } = req.body;
-    const image = req.file ? `/uploads/${req.file.filename}` : req.body.imageUrl;
+    const image = req.file ? `/tmp/uploads/${req.file.filename}` : req.body.imageUrl;
     const product = await Product.create({ title, description, price, image, category, stock, createdBy: req.user._id });
     res.status(201).json(product);
   } catch (err) {
