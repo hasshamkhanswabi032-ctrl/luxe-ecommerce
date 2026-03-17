@@ -1,14 +1,26 @@
 const router = require('express').Router();
 const multer = require('multer');
-const path = require('path');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const Product = require('../models/Product');
 const { protect, adminOnly } = require('../middleware/auth');
 
-// Use memory storage instead of disk - works on Vercel
-const storage = multer.memoryStorage();
-const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
-// Get all products (protected)
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'luxe-products',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'webp']
+  }
+});
+
+const upload = multer({ storage });
+
 router.get('/', protect, async (req, res) => {
   try {
     const products = await Product.find().sort('-createdAt');
@@ -18,15 +30,13 @@ router.get('/', protect, async (req, res) => {
   }
 });
 
-// Add product (admin only)
 router.post('/', protect, adminOnly, upload.single('image'), async (req, res) => {
   try {
-    const { title, description, price, category, stock, imageUrl } = req.body;
-    // Use imageUrl from body since we can't store files on Vercel
-    const image = imageUrl || '';
-    const product = await Product.create({ 
-      title, description, price, image, category, stock, 
-      createdBy: req.user._id 
+    const { title, description, price, category, stock } = req.body;
+    const image = req.file ? req.file.path : req.body.imageUrl;
+    const product = await Product.create({
+      title, description, price, image, category, stock,
+      createdBy: req.user._id
     });
     res.status(201).json(product);
   } catch (err) {
@@ -34,7 +44,6 @@ router.post('/', protect, adminOnly, upload.single('image'), async (req, res) =>
   }
 });
 
-// Delete product (admin only)
 router.delete('/:id', protect, adminOnly, async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);

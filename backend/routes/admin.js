@@ -1,35 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
 const User = require('../models/User');
 const { protect, adminOnly } = require('../middleware/auth');
 
-// Multer setup for image uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const dir = path.join(__dirname, '../uploads');
-    if (process.env.NODE_ENV !== 'production') {
-      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    }
-    cb(null, dir);
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname.replace(/\s/g, '_'));
-  },
+// Cloudinary setup for image uploads
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
-const upload = multer({
-  storage,
-  limits: { fileSize: 5 * 1024 * 1024 },
-  fileFilter: (req, file, cb) => {
-    const allowed = /jpeg|jpg|png|webp/;
-    if (allowed.test(path.extname(file.originalname).toLowerCase())) cb(null, true);
-    else cb(new Error('Only images allowed'));
-  },
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'luxe-products',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'webp']
+  }
 });
+
+const upload = multer({ storage });
 
 // All admin routes require auth + admin role
 router.use(protect, adminOnly);
@@ -67,7 +61,7 @@ router.post('/products', upload.single('image'), async (req, res) => {
       return res.status(400).json({ message: 'Title, description, and price are required' });
 
     const image = req.file
-      ? `/uploads/${req.file.filename}`
+      ? req.file.path
       : req.body.imageUrl || '';
 
     if (!image) return res.status(400).json({ message: 'Image is required' });
@@ -90,7 +84,7 @@ router.post('/products', upload.single('image'), async (req, res) => {
 router.put('/products/:id', upload.single('image'), async (req, res) => {
   try {
     const updates = { ...req.body };
-    if (req.file) updates.image = `/uploads/${req.file.filename}`;
+    if (req.file) updates.image = req.file.path;
     if (updates.price) updates.price = Number(updates.price);
     if (updates.stock) updates.stock = Number(updates.stock);
 
